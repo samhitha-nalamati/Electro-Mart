@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Star, ShoppingCart } from "lucide-react";
 import { Product } from "@shared/schema";
 import { Button } from "@/components/ui/button";

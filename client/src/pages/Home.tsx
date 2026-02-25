@@ -5,7 +5,7 @@ import { useProducts } from "@/hooks/use-products";
 import { Input } from "@/components/ui/input";
 import { Search, Loader2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-
+import { Button } from "@/components/ui/button";
 export default function Home() {
   const { data: products, isLoading } = useProducts();
   const [search, setSearch] = useState("");
