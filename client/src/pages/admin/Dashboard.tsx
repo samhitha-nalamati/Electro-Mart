@@ -83,7 +83,7 @@ export default function AdminDashboard() {
                   <XAxis dataKey="name" stroke="#888888" fontSize={12} tickLine={false} axisLine={false} />
                   <YAxis stroke="#888888" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `$${value}`} />
                   <Tooltip cursor={{fill: '#262626'}} contentStyle={{backgroundColor: '#121212', border: '1px solid #262626', borderRadius: '8px'}} />
-                  <Bar dataKey="total" fill="var(--primary)" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="total" fill="#00d1ff" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </CardContent>

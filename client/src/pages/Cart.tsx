@@ -2,7 +2,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { useCart, useUpdateCartItem, useRemoveFromCart, useClearCart } from "@/hooks/use-cart";
 import { useCreateOrder } from "@/hooks/use-orders";
 import { Button } from "@/components/ui/button";
-import { Minus, Plus, Trash2, ShoppingBag, ArrowRight } from "lucide-react";
+import { Minus, Plus, Trash2, ShoppingBag, ArrowRight, Loader2 } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { useToast } from "@/hooks/use-toast";
 
@@ -126,6 +126,3 @@ export default function Cart() {
     </div>
   );
 }
-
-// Quick import loader fix since Loader2 wasn't imported at top
-import { Loader2 } from "lucide-react";
