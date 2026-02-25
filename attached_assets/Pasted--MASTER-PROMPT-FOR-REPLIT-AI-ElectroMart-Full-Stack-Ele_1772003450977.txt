@@ -1,0 +1,328 @@
+🚀 MASTER PROMPT FOR REPLIT AI
+ElectroMart – Full Stack Electronics Store with Admin AI Dashboard
+🔷 Instructions to Replit AI
+
+Generate a complete, runnable full-stack web application named ElectroMart with backend and frontend inside the same Replit project.
+
+The project must:
+
+Automatically install required dependencies
+
+Use proper folder structure
+
+Include a .env file example
+
+Be fully runnable using npm install and npm run dev
+
+Avoid placeholder pseudo-code
+
+Ensure all imports and routes work correctly
+
+🔷 Tech Stack Requirements
+
+Backend:
+
+Node.js
+
+Express
+
+MongoDB (use MongoDB Atlas connection string placeholder)
+
+Mongoose
+
+bcrypt
+
+jsonwebtoken (JWT)
+
+dotenv
+
+cors
+
+express-rate-limit
+
+Frontend:
+
+React (Vite preferred)
+
+Axios
+
+React Router DOM
+
+Project must run both frontend and backend properly (use concurrently if needed).
+
+🔷 Required Folder Structure
+ElectroMart/
+  backend/
+    models/
+    controllers/
+    routes/
+    middleware/
+    config/
+    utils/
+    server.js
+  frontend/
+    src/
+      components/
+      pages/
+      services/
+      context/
+      utils/
+    package.json
+  package.json
+  .env.example
+  README.md
+🔷 Core Features To Implement
+1️⃣ Authentication & Role-Based Authorization
+
+Implement:
+
+User Registration
+
+User Login
+
+JWT Authentication
+
+Role field:
+
+"customer"
+
+"admin"
+
+Security Requirements:
+
+Hash passwords using bcrypt
+
+JWT expiration
+
+Auth middleware
+
+Admin-only middleware
+
+Rate limiting on login routes
+
+Hidden admin login route:
+
+/admin-login
+2️⃣ Product System
+
+Product Schema:
+
+name
+
+price
+
+description
+
+category
+
+image
+
+stock
+
+averageRating
+
+sentimentStats
+
+Features:
+
+Browse products
+
+Search products
+
+Filter by category
+
+Product detail page
+
+Disable Add to Cart if stock = 0
+
+Admin CRUD for products
+
+3️⃣ Cart System (Database-Based)
+
+Store cart in MongoDB
+
+Linked to user ID
+
+Persist across sessions
+
+Add/remove/update quantity
+
+Calculate total price
+
+4️⃣ Order System
+
+Order Schema:
+
+userId
+
+products[]
+
+totalPrice
+
+status:
+
+Pending
+
+Confirmed
+
+Shipped
+
+Delivered
+
+createdAt
+
+Logic:
+
+Deduct stock after order
+
+Save order
+
+Customer order history
+
+Admin can view all orders
+
+Admin can update order status
+
+5️⃣ Reviews & Ratings
+
+Review Schema:
+
+userId
+
+productId
+
+rating (1–5)
+
+comment
+
+sentiment (positive/neutral/negative)
+
+createdAt
+
+Rules:
+
+Only users who purchased can review
+
+Automatically run sentiment analysis on review submission
+
+Update product average rating automatically
+
+6️⃣ Sentiment Analysis Logic
+
+Implement keyword-based logic:
+
+Positive words:
+
+good, great, excellent, amazing, worth, perfect
+
+Negative words:
+
+bad, poor, worst, waste, broken, slow
+
+Process:
+
+Analyze review text
+
+Assign sentiment
+
+Store in DB
+
+Recalculate product sentiment breakdown
+
+Admin dashboard displays:
+
+% positive
+
+% negative
+
+% neutral
+
+Most positively reviewed product
+
+Most negatively reviewed product
+
+7️⃣ Admin Dashboard
+
+Accessible only via:
+
+/admin-login
+
+Admin Features:
+
+Product management (CRUD)
+
+View all orders
+
+Update order status
+
+View all reviews
+
+Sentiment analytics
+
+Platform metrics:
+
+Total users
+
+Total orders
+
+Total revenue
+
+Top-selling product
+
+8️⃣ Tech News Integration
+
+On Admin Dashboard:
+
+Fetch top 5 electronics/technology headlines
+
+Display:
+
+Title
+
+Short description
+
+External link
+
+Handle API errors gracefully
+
+🔷 Security Requirements
+
+Implement:
+
+JWT middleware
+
+Role-based authorization
+
+Password hashing
+
+Rate limiting
+
+Input validation
+
+Proper HTTP status codes
+
+Environment variables
+
+Token expiration
+
+Global error handler
+
+🔷 Additional Requirements
+
+Include sample seed data (products & one admin user)
+
+Provide .env.example
+
+Include clear README with setup instructions
+
+Ensure project runs without breaking imports
+
+Use clean MVC pattern
+
+No pseudo-code or missing dependencies
+
+🔷 Final Instruction to Replit AI
+
+Generate a fully working, structured, production-style full-stack project that runs successfully inside Replit without manual restructuring.
+
+Ensure backend and frontend are properly connected using correct API base URLs.
