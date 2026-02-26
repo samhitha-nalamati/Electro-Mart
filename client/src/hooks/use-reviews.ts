@@ -30,6 +30,7 @@ export function useCreateReview() {
       queryClient.invalidateQueries({ queryKey: ['reviews', variables.productId] });
       queryClient.invalidateQueries({ queryKey: ['products', variables.productId] });
       queryClient.invalidateQueries({ queryKey: ['reviews', 'all'] });
+      queryClient.invalidateQueries({ queryKey: ['admin', 'productHealth'] });
     },
   });
 }

@@ -1,5 +1,5 @@
 import { AdminLayout } from "@/components/layout/AdminLayout";
-import { useAdminStats, useAdminNews } from "@/hooks/use-admin";
+import { useAdminStats, useAdminNews , useProductHealth } from "@/hooks/use-admin";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Users, ShoppingCart, DollarSign, Package, Newspaper, BrainCircuit } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
@@ -7,6 +7,7 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pi
 export default function AdminDashboard() {
   const { data: stats, isLoading: statsLoading } = useAdminStats();
   const { data: news, isLoading: newsLoading } = useAdminNews();
+  const { data: productHealth, isLoading: productHealthLoading } = useProductHealth();
 
   // Mock data for charts since backend only returns basic stats
   const revenueData = [
@@ -120,7 +121,60 @@ export default function AdminDashboard() {
             </CardContent>
           </Card>
         </div>
-
+        {/* Product Replacement Recommendations */}
+        <Card className="bg-card/50 border-border/50">
+          <CardHeader>
+            <CardTitle className="font-display">
+              🔍 Product Health Insights
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {productHealthLoading ? (
+              <div className="flex justify-center p-4">
+                <BrainCircuit className="w-6 h-6 animate-pulse text-muted-foreground" />
+              </div>
+            ) : !productHealth || productHealth.length === 0 ? (
+              <p className="text-muted-foreground">
+                No health data available.
+              </p>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm text-left">
+                  <thead>
+                    <tr className="border-b border-border/50 text-muted-foreground uppercase text-[10px] font-bold tracking-wider">
+                      <th className="pb-3 pr-4">Product</th>
+                      <th className="pb-3 pr-4">Stock</th>
+                      <th className="pb-3 pr-4">Revenue</th>
+                      <th className="pb-3 pr-4">Neg. %</th>
+                      <th className="pb-3 text-right">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-border/30">
+                    {productHealth.map((p: any) => (
+                      <tr key={p.id} className="group">
+                        <td className={`py-3 pr-4 font-medium ${p.status === 'Replace' ? 'text-red-400 font-bold' : 'text-foreground'}`}>
+                          {p.name}
+                        </td>
+                        <td className="py-3 pr-4 text-muted-foreground">{p.stock}</td>
+                        <td className="py-3 pr-4 text-muted-foreground">${p.revenue.toFixed(2)}</td>
+                        <td className="py-3 pr-4 text-muted-foreground">{p.negativePercent}%</td>
+                        <td className="py-3 text-right">
+                          <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide
+                            ${p.status === 'Healthy' ? 'bg-green-500/10 text-green-500' : 
+                              p.status === 'Monitor' ? 'bg-yellow-500/10 text-yellow-500' : 
+                              'bg-red-500/20 text-red-400 ring-1 ring-red-500/50'}
+                          `}>
+                            {p.status}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </CardContent>
+        </Card>
         {/* Tech News */}
         <Card className="bg-card/50 border-border/50">
           <CardHeader>

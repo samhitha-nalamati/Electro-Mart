@@ -171,6 +171,20 @@ export const api = {
           url: z.string()
         }))
       }
+    },
+    productHealth: {
+      method: 'GET' as const,
+      path: '/api/admin/product-health' as const,
+      responses: {
+        200: z.array(z.object({
+          id: z.number(),
+          name: z.string(),
+          stock: z.number(),
+          revenue: z.number(),
+          negativePercent: z.string(),
+          status: z.enum(['Healthy', 'Monitor', 'Replace'])
+        }))
+      }
     }
   }
 };

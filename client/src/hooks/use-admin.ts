@@ -8,7 +8,12 @@ export function useAdminStats() {
     queryFn: () => apiFetch(api.admin.stats.path),
   });
 }
-
+export function useProductHealth() {
+  return useQuery({
+    queryKey: ["admin", "productHealth"],
+    queryFn: () => apiFetch(api.admin.productHealth.path),
+  });
+}
 export function useAdminNews() {
   return useQuery<{title: string, description: string, url: string}[]>({
     queryKey: ['admin', 'news'],

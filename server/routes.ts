@@ -28,8 +28,8 @@ function requireAdmin(req: any, res: any, next: any) {
 // Sentiment analysis helper
 function analyzeSentiment(text: string): 'positive' | 'negative' | 'neutral' {
   const textLower = text.toLowerCase();
-  const positiveWords = ['good', 'great', 'excellent', 'amazing', 'worth', 'perfect'];
-  const negativeWords = ['bad', 'poor', 'worst', 'waste', 'broken', 'slow'];
+  const positiveWords = ['good', 'great', 'best', 'excellent', 'amazing', 'worth', 'perfect'];
+  const negativeWords = ['bad', 'poor', 'worst', 'waste', 'broken', 'slow', 'damaged'];
   
   let posCount = 0;
   let negCount = 0;
@@ -222,7 +222,55 @@ export async function registerRoutes(
       res.json([]);
     }
   });
+  // Product Health Recommendation
+  app.get(api.admin.productHealth.path, authenticateToken, requireAdmin, async (req, res) => {
+    const products = await storage.getProducts();
+    const reviews = await storage.getAllReviews();
+    const orders = await storage.getAllOrders();
 
+    // Revenue per product
+    const revenueMap: Record<number, number> = {};
+    products.forEach(p => revenueMap[p.id] = 0);
+
+    orders.forEach((order: any) => {
+      order.items.forEach((item: any) => {
+        revenueMap[item.productId] += parseFloat(item.priceAtTime) * item.quantity;
+      });
+    });
+
+    const avgRevenue = products.length > 0 ?
+      Object.values(revenueMap).reduce((a, b) => a + b, 0) / products.length : 0;
+
+    const productHealth = products.map(product => {
+      const productReviews = reviews.filter(r => r.productId === product.id);
+      const negativeCount = productReviews.filter(r => r.sentiment === "negative").length;
+      const negativePercent =
+        productReviews.length > 0 ? negativeCount / productReviews.length : 0;
+
+      const revenue = revenueMap[product.id] || 0;
+      const highStock = product.stock > 20;
+      const lowRevenue = revenue < avgRevenue;
+
+      let status: 'Healthy' | 'Monitor' | 'Replace' = "Healthy";
+
+      if (negativePercent > 0.4 && highStock && lowRevenue) {
+        status = "Replace";
+      } else if (negativePercent > 0.25 || revenue < avgRevenue * 0.5) {
+        status = "Monitor";
+      }
+
+      return {
+        id: product.id,
+        name: product.name,
+        stock: product.stock,
+        revenue,
+        negativePercent: (negativePercent * 100).toFixed(1),
+        status
+      };
+    });
+
+    res.json(productHealth);
+  });
   // Call Seed at startup
   seedDatabase().catch(console.error);
 
