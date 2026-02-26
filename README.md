@@ -13,7 +13,7 @@ This repository contains a full-stack sample application named Electro-Mart. It 
 
 ## Deployed Link
 
-https://electro-mart--samhithanalamat.replit.app/admin
+https://electro-mart--samhithanalamat.replit.app
 
 ## Requirements
 
